@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Left4Dead3</title>
+    <link rel="preload" href="src/styles/menu.css" as="style">
+    <link rel="stylesheet" href="src/styles/menu.css">
+    <link rel="stylesheet" href="src/styles/musica.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Carrois+Gothic+SC&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <h1>GAME</h1>
+    </header>
+
+    <audio id="bgMusic" loop>
+        <source src="public/assets/font/music/l4d2_c1.wav" type="audio/wav">
+    </audio>
+
+    <div class="audio-control">
+        <button id="playPauseBtn">---</button>
+    </div>
+
+    <main>
+
+        <div class="container-canvas" id="container-canvas">
+            <canvas id="canvas" height="600px" width="1200px"></canvas>
+
+            <div class="contenedor-creditos">
+                <div class="title">
+                    <h2>Creditos</h2>
+                    <h3>Materia: Tecnologias Web</h3>
+                    <h3 id="fecha"></h3>
+                    <h3>Desarrollado por: </h3>
+                </div>
+
+                <div class="contenedor-creadores">
+                    <div class="creador-1 creador" id="creador">
+                        <a href="https://github.com/DanyGHub" target="_blank">
+                            <div class="info">
+                                <p>Angel Daniel Lopez Rodriguez</p>
+                            </div>
+                            <div class="image">
+                                <img src="public/assets/dany.jpg" alt="">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="creador-2 creador" id="creador">
+                        <a href="https://github.com/eDanSalas" target="_blank">
+                            <div class="info">
+                                <p>Eric Daniel Salas Martinez</p>
+                            </div>
+                            <div class="image">
+                                <img src="public/assets/dan.jpg" alt="">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="creador-3 creador" id="creador">
+                        <a href="https://github.com/DaiserNet" target="_blank">
+                            <div class="info">
+                                <p>Diego Adriel Segura Ramirez</p>
+                            </div>
+                            <div class="image">
+                                <img src="public/assets/diego.jpg" alt="">
+                            </div>
+                        </a>
+                    </div>
+                    <!-- <div class="creadores">
+                    </div> -->
+                </div>
+
+                <button id="btn-regresar">REGRESAR</button>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <h3>© Left4Dead3</h3>
+    </footer>
+
+    <script src="src/scripts/menu.js"></script>
+    <script>
+        function getActualDate() {
+            const date = new Date();
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+
+            return `${day}/${month}/${year}`;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const fecha = document.getElementById("fecha");
+            fecha.textContent = getActualDate();
+        });
+
+        document.getElementById("btn-regresar").addEventListener("click", () => {
+            window.location.href = "/menu";
+        });
+    </script>
+
+    <script src="src/scripts/musica.js"></script>
+</body>
+
+</html>

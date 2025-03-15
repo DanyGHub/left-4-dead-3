@@ -1,0 +1,39 @@
+.audio-control {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.audio-control > button {
+    background-color: #2d3748;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 2px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.audio-control > button:hover {
+    background-color: #1a202c;
+    transform: scale(1.05);
+    color: #ff6b6b;
+}
+
+.audio-control > button:active {
+    background-color: #ff3131;
+    color: black;
+}
+
+.swal-title {
+    font-family: 'Future Rot', sans-serif;
+    font-weight: bold;
+}
+
+.swal-popup {
+    border: 2px solid #ff3131;
+    box-shadow: 0px 0px 15px rgba(255, 49, 49, 0.8);
+}

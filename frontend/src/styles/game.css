@@ -1,0 +1,64 @@
+:root {
+    --black-green: #005500; /* Lugares oscuros */
+    --black: #000000; /* Fondos */
+    --metalic-gray: #808080; /* Estructuras Industriales */
+    --blood-red: #990000; /* Para cuando a alguien le de por Monstruar */
+    --non-white: #CCCCCC; /* Texto xd */
+
+    --black-blue: #071952;
+    --main-blue: #0B666A;
+    --light-blue: #35A29F;
+}
+
+@font-face {
+    font-family: 'Future Rot';
+    src: url('../../public/assets/font/future_rot_transform/FutureRot.woff2') format('woff2'),
+        url('../../public/assets/font/future_rot_transform/FutureRot.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Carrois Gothic SC", serif;
+    background-color: #1a202c;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    text-align: center;
+    background-color: #2d3748;
+    margin-bottom: 10px;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 5px;
+    color: var(--non-white);
+}
+
+footer {
+    display: flex;
+    background-color: #2d3748;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+footer h3 {
+    color: var(--non-white);
+    font-size: 1rem;
+}

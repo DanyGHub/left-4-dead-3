@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Left4Dead3</title>
+    <link rel="preload" href="src/styles/menu.css" as="style">
+    <link rel="stylesheet" href="src/styles/menu.css">
+    <link rel="stylesheet" href="src/styles/musica.css">
+    <link href="https://fonts.googleapis.com/css2?family=Carrois+Gothic+SC&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    
+    <header>
+        <h1>GAME</h1>
+    </header>
+
+    <audio id="bgMusic" loop>
+        <source src="public/assets/font/music/l4d2_c1.wav" type="audio/wav">
+    </audio>
+
+    <div class="audio-control">
+        <button id="playPauseBtn">---</button>
+    </div>
+
+    <main>
+        <div class="container-canvas" id="container-canvas">
+            <canvas id="canvas" height="600px" width="1200px"></canvas>
+            
+            <div class="contenedor-menu">
+                <div class="cuadros">
+                    <div class="cuadro game-select" id="game">
+                        <img src="public/assets/ellis.webp" alt="">
+                        <p class="btn">INICIAR JUEGO</p>
+                        <p class="mensaje">Preparate para combatir infectados</p>
+                    </div>
+                    <div class="cuadro game-mode-1" id="records">
+                        <img class="img-game-mode" src="public/assets/game-mode-2.png" alt="">
+                        <p class="btn">RECORDS</p>
+                        <!-- <p class="mensaje">Revisa tus puntuaciones y las de tus amigos</p> -->
+                    </div>
+                    <div class="cuadro game-mode-2" id="instructions">
+                        <img class="img-game-mode" src="public/assets/game-mode.png" alt="">
+                        <p class="btn">INSTRUCCIONES</p>
+                        <!-- <p class="mensaje">¿Tienes dudas? Checa la guia</p> -->
+                    </div>
+                </div>
+        
+                <div class="botones">
+                    <div class="boton">
+                        <p class="btn" id="credits">CREDITOS</p>
+                    </div>
+                    <div class="boton" id="exit">
+                        <p class="btn">SALIR</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </main>
+    
+    <footer>
+        <h3>© Left4Dead3</h3>
+    </footer>
+
+    <script src="src/scripts/menu.js"></script>
+    <script src="src/scripts/musica.js"></script>
+</body>
+</html>
