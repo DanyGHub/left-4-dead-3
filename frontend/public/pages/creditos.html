@@ -88,6 +88,7 @@
 
     <script src="src/scripts/menu.js"></script>
     <script>
+        const sonidoClickRegresar = new Audio("public/assets/audio/startSFX.mp3");
         function getActualDate() {
             const date = new Date();
             const day = String(date.getDate()).padStart(2, '0');
@@ -103,7 +104,12 @@
         });
 
         document.getElementById("btn-regresar").addEventListener("click", () => {
-            window.location.href = "/menu";
+
+            sonidoClickRegresar.play();
+
+            setTimeout(() => {
+                window.location.href = "/menu";
+            }, 300);
         });
     </script>
 

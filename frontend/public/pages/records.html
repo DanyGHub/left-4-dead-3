@@ -39,18 +39,20 @@
                 <h2 class="title">Records</h2>
             </div> -->
             <div class="container">
-                <table id="records" class="table table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Puntuacion</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- records añadidos -->
-                    </tbody>
-                </table>
+                <div class="table-container">
+                    <table id="records" class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Puntuacion</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- records añadidos -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <button id="btn-regresarRec">REGRESAR</button>
@@ -67,14 +69,6 @@
         crossorigin="anonymous"></script>
     <script src="src/scripts/records.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const elemento = document.getElementById('container-canvas');
-            elemento.addEventListener('click', function () {
-                let audio = document.getElementById("bgMusic");
-                audio.play().catch(error => console.log("Reproducción bloqueada por el navegador", error));
-            });
-        });
-
         const sonidoClick = new Audio("public/assets/audio/startSFX.mp3");
         document.getElementById("btn-regresarRec").addEventListener("click", () => {
 

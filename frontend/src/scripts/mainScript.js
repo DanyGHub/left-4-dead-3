@@ -23,14 +23,14 @@ let scoreText;
 let damage = 5;
 let charImage;
 let desfribilador = [];
-let specialObj, botiquinText;
+let specialObj, botiquinText, armaText;
 let shooting = true;
 let bullets;
 let immune = false;
 let zombies, contZombi =30;
-let bossHealth = 100, bossTimer = 10, bossText, boss;
+let bossHealth = 100, bossTimer = 10, bossText, boss, bossDamage = 1;
 let pause = false;
-let pauseButton, pauseText, pauseOver;
+let pauseButton, pauseText, pauseOver, menuButton;
 let shot, gas, boti;
 let survivor;
 let lv = 1, lvText, dateTxt, lvCompleteTxt;
@@ -51,17 +51,6 @@ const gameplay2 = {
     create: create2,
     update: update2
 };
-
-const win = {
-    key : "win",
-    preload() {
-        
-    },
-    
-    create() {
-        
-    }
-}
 
 function init (data) {
     this.selectedCharacter = data.selectedCharacter;
@@ -88,6 +77,7 @@ function preload () {
     this.load.audio('shot', 'public/assets/audio/shot.mp3');
     this.load.audio('gas', 'public/assets/audio/gas.mp3');
     this.load.audio('boti', 'public/assets/audio/boti.mp3');
+    this.load.audio('hit', 'public/assets/audio/hit.mp3');
 }
 
 function preload2 () {
@@ -95,7 +85,7 @@ function preload2 () {
     this.load.image('sky2-2', 'public/assets/mapa2-2.png');
     this.load.image('floor', 'public/assets/floor.png');
     this.load.image('ground', 'public/assets/platform.png');
-    this.load.image('gasoline', 'public/assets/gasoline.png');
+    //this.load.image('gasoline', 'public/assets/gasoline.png');
     this.load.spritesheet('zombie1', 'public/assets/sprites/WildZombie/Walk.png', { frameWidth: 96, frameHeight: 96 });
     this.load.spritesheet('zombie2', 'public/assets/sprites/ZombieMan/Walk.png', { frameWidth: 96, frameHeight: 96 });
     this.load.spritesheet('zombie3', 'public/assets/sprites/ZombieWoman/Walk.png', { frameWidth: 96, frameHeight: 96 });
@@ -111,6 +101,7 @@ function preload2 () {
     this.load.audio('shot', 'public/assets/audio/shot.mp3');
     this.load.audio('gas', 'public/assets/audio/gas.mp3');
     this.load.audio('boti', 'public/assets/audio/boti.mp3');
+    this.load.audio('hit', 'public/assets/audio/hit.mp3');
 }
 
 function create2 () {
@@ -135,8 +126,8 @@ function create2 () {
     platforms.create(2000, 568, 'floor').setScale(2).refreshBody().setAlpha(0);
 
     //  Now let's create some ledges
-    platforms.create(845, 330, 'ground').setAlpha(0.8);
-    platforms.create(1545, 330, 'ground').setAlpha(0.8);
+    platforms.create(845, 370, 'ground').setAlpha(0.8);
+    platforms.create(1545, 370, 'ground').setAlpha(0.8);
 
     //UserName
     userNameText = this.add.text(180, 570, `${survivor}`, {
@@ -166,6 +157,25 @@ function create2 () {
     }).setOrigin(0.5, 0.5); // Centrar el texto
     pauseText.setVisible(false);
 
+    menuButton = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 60, 'Volver al Menú', {
+        fontSize: '32px',
+        fill: '#ffffff',
+        backgroundColor: '#990000'
+    }).setOrigin(0.5, 0.5)
+      .setPadding(10)
+      .setInteractive()
+      .setVisible(false);
+
+    menuButton.on('pointerdown', () => {
+       this.physics.resume();
+        pause = false;
+        pauseButton.setTexture('pausa');
+        pauseOver.setVisible(false);
+        pauseText.setVisible(false);
+        menuButton.setVisible(false);
+        window.location.href = '/menu';
+    });
+    
     pauseButton = this.add.image(1150, 40, 'pausa')
         .setDisplaySize(50, 50)
         .setInteractive()
@@ -178,18 +188,21 @@ function create2 () {
             pauseButton.setTexture('play');
             pauseOver.setVisible(true); // Mostrar la pantalla de pausa
             pauseText.setVisible(true);
+            menuButton.setVisible(true);
         } else {
             this.physics.resume(); // Reanudar la física
             pause = false;
             pauseButton.setTexture('pausa');
             pauseOver.setVisible(false);
             pauseText.setVisible(false);
+            menuButton.setVisible(false);
         }
     });
 
     shot = this.sound.add('shot');
     gas = this.sound.add('gas');
     boti = this.sound.add('boti');
+    hit = this.sound.add('hit');
 
     // Crear el botiquín
     specialObj = this.physics.add.sprite(
@@ -319,24 +332,24 @@ function create2 () {
     });
 
     //  Some stars to collect, 10 in total, evenly spaced 70 pixels apart along the x axis
-    gasolines = this.physics.add.group({
-        key: 'gasoline',
-        repeat: -1,
-        setXY: { x: 300, y: 10, stepX: 200, stepY: 50 }
-    });
+    // gasolines = this.physics.add.group({
+    //     key: 'gasoline',
+    //     repeat: -1,
+    //     setXY: { x: 300, y: 10, stepX: 200, stepY: 50 }
+    // });
 
     bullets = this.physics.add.group({
         defaultKey: 'bullet',
         maxSize: 10000 
     });
 
-    gasolines.children.iterate(function (child) {
-        //  Give each star a slightly different bounce
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-    });
+    // gasolines.children.iterate(function (child) {
+    //     //  Give each star a slightly different bounce
+    //     child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+    // });
 
     //  The score
-    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#ff0000' });
+    scoreText = this.add.text(16, 16, 'score: ' + score, { fontSize: '32px', fill: '#ff0000' });
     livesText = this.add.text(16, 50, 'Lives: ', { fontSize: '32px', fill: '#ff0000' });
     healthText = this.add.text(16, 50, health + '%', { fontSize: '28px', fill: '#fff' });
     //The Health Bar
@@ -345,13 +358,13 @@ function create2 () {
 
     //  Collide the player and the gasoline with the platforms
     this.physics.add.collider(player, platforms);
-    this.physics.add.collider(gasolines, platforms);
+    //this.physics.add.collider(gasolines, platforms);
     this.physics.add.collider(specialObj, platforms);
     this.physics.add.collider(zombies, platforms);
     this.physics.add.collider(boss, platforms);
 
     //  Checks to see if the player overlaps with any of the gasoline, if he does call the collectStar function
-    this.physics.add.overlap(player, gasolines, collectStar2, null, this);
+    //this.physics.add.overlap(player, gasolines, collectStar2, null, this);
     this.physics.add.overlap(player, specialObj, collectSpecialObj, null, this);
     this.physics.add.overlap(player, zombies, hitByZombie, null, this);
     this.physics.add.overlap(player, boss, hitByBoss, null, this);
@@ -426,26 +439,47 @@ function create () {
     }).setOrigin(0.5, 0.5); // Centrar el texto
     pauseText.setVisible(false);
 
+    menuButton = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 60, 'Volver al Menú', {
+        fontSize: '32px',
+        fill: '#ffffff',
+        backgroundColor: '#990000'
+    }).setOrigin(0.5, 0.5)
+      .setPadding(10)
+      .setInteractive()
+      .setVisible(false);
+
+    menuButton.on('pointerdown', () => {
+       this.physics.resume();
+        pause = false;
+        pauseButton.setTexture('pausa');
+        pauseOver.setVisible(false);
+        pauseText.setVisible(false);
+        menuButton.setVisible(false);
+        window.location.href = '/menu';
+    });
+
     pauseButton = this.add.image(1150, 40, 'pausa')
         .setDisplaySize(50, 50)
         .setInteractive()
         .setOrigin(0.5, 0.5);
 
-    pauseButton.on('pointerdown', () => {
-        if (!pause) {
-            this.physics.pause(); // Pausar la física
-            pause = true;
-            pauseButton.setTexture('play');
-            pauseOver.setVisible(true); // Mostrar la pantalla de pausa
-            pauseText.setVisible(true);
-        } else {
-            this.physics.resume(); // Reanudar la física
-            pause = false;
-            pauseButton.setTexture('pausa');
-            pauseOver.setVisible(false);
-            pauseText.setVisible(false);
-        }
-    });
+        pauseButton.on('pointerdown', () => {
+            if (!pause) {
+                this.physics.pause(); // Pausar la física
+                pause = true;
+                pauseButton.setTexture('play');
+                pauseOver.setVisible(true); // Mostrar la pantalla de pausa
+                pauseText.setVisible(true);
+                menuButton.setVisible(true);
+            } else {
+                this.physics.resume(); // Reanudar la física
+                pause = false;
+                pauseButton.setTexture('pausa');
+                pauseOver.setVisible(false);
+                pauseText.setVisible(false);
+                menuButton.setVisible(false);
+            }
+        });
 
     const audio = document.getElementById('bgMusic');
 
@@ -462,6 +496,7 @@ function create () {
     shot = this.sound.add('shot');
     gas = this.sound.add('gas');
     boti = this.sound.add('boti');
+    hit = this.sound.add('hit');
 
     // Crear el botiquín
     specialObj = this.physics.add.sprite(
@@ -478,6 +513,7 @@ function create () {
     }).setOrigin(0.5);
 
     // Temporizador para el botiquín
+    var aux = 0;
     this.time.addEvent({
         delay: 1000,
         callback: () => {
@@ -491,6 +527,14 @@ function create () {
                 if (botiquinText) {
                     botiquinText.destroy();
                     botiquinText = null;
+                }
+                if(aux == 0){
+                    console.log(aux);
+                    let gasoline = this.physics.add.sprite(specialObj.x, specialObj.y, 'gasoline').setScale(1);
+                    gasoline.setCollideWorldBounds(true);
+                    this.physics.add.collider(gasoline, platforms);
+                    this.physics.add.overlap(player, gasoline, collectStar, null, this);
+                    aux++;
                 }
             }
         },
@@ -639,19 +683,12 @@ function update () {
         return;
     }
 
-    if (lvCompleteTxt && lvCompleteTxt.visible) {
+    if (lvCompleteTxt && lvCompleteTxt.visible) { 
         if (this.input.keyboard.checkDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N), 500)) {
-            let user = JSON.parse(localStorage.getItem(`superviviente ${survivor}`));
-            if (user.puntuacion < score) {
-                localStorage.setItem(`superviviente ${survivor}`, JSON.stringify({
-                    jugador: survivor,
-                    puntuacion: score,
-                    fecha: getActualDate()
-                }));
-            }
             this.scene.start("gameplay2", {                 
                 selectedCharacter: this.selectedCharacter,
-                selectedSprite: this.selectedSprite
+                selectedSprite: this.selectedSprite,
+                actualScore: score
             });
         }
     }
@@ -705,6 +742,7 @@ function update () {
     pauseButton.setPosition(this.cameras.main.scrollX + 1150, this.cameras.main.scrollY + 40);
     pauseOver.setPosition(this.cameras.main.scrollX, this.cameras.main.scrollY);
     pauseText.setPosition(this.cameras.main.scrollX+600, this.cameras.main.scrollY+300);
+    menuButton.setPosition(this.cameras.main.scrollX+600, this.cameras.main.scrollY+400);
     dateTxt.setPosition(this.cameras.main.scrollX+800, this.cameras.main.scrollY+550);
     lvText.setPosition(this.cameras.main.scrollX+600, this.cameras.main.scrollY);
     desfribilador[0].setPosition(this.cameras.main.scrollX + 210, this.cameras.main.scrollY + 50);
@@ -741,23 +779,6 @@ function update2 () {
         return;
     }
 
-    if (lvCompleteTxt && lvCompleteTxt.visible) {
-        if (this.input.keyboard.checkDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N), 500)) {
-            let user = JSON.parse(localStorage.getItem(`superviviente ${survivor}`));
-            if (user.puntuacion < score) {
-                localStorage.setItem(`superviviente ${survivor}`, JSON.stringify({
-                    jugador: survivor,
-                    puntuacion: score,
-                    fecha: getActualDate()
-                }));
-            }
-            this.scene.start("gameplay2", {                 
-                selectedCharacter: selectedCharacter,
-                selectedSprite: selectedSprite
-            });
-        }
-    }
-
     if(pause){
         return;
     }
@@ -807,6 +828,7 @@ function update2 () {
     pauseButton.setPosition(this.cameras.main.scrollX + 1150, this.cameras.main.scrollY + 40);
     pauseOver.setPosition(this.cameras.main.scrollX, this.cameras.main.scrollY);
     pauseText.setPosition(this.cameras.main.scrollX+600, this.cameras.main.scrollY+300);
+    menuButton.setPosition(this.cameras.main.scrollX+600, this.cameras.main.scrollY+400);
     dateTxt.setPosition(this.cameras.main.scrollX+800, this.cameras.main.scrollY+550);
     bossText.setPosition(boss.x, boss.y - 80);
     lvText.setPosition(this.cameras.main.scrollX+600, this.cameras.main.scrollY);
@@ -855,13 +877,13 @@ function collectStar (player, gasoline) {
     }
 }
 
-function collectStar2 (player, gasoline) {
-    gasoline.disableBody(true, true);
-    score += 10;
-    scoreText.setText('Score: ' + score);
-    gas.setVolume(0.4);
-    gas.play();
-}
+// function collectStar2 (player, gasoline) {
+//     gasoline.disableBody(true, true);
+//     score += 10;
+//     scoreText.setText('Score: ' + score);
+//     gas.setVolume(0.4);
+//     gas.play();
+// }
 
 
 function collectSpecialObj(player, botiquin) {
@@ -891,6 +913,8 @@ function hitByZombie(player, zombie){
         healthText.setText(health + '%');
 
         immune = true;
+        hit.setVolume(0.7);
+        hit.play();
 
         setTimeout(() => {
             immune = false;
@@ -922,6 +946,8 @@ function hitByBoss(player, boss){
         healthText.setText(health + '%');
 
         immune = true;
+        hit.setVolume(0.9);
+        hit.play();
 
         setTimeout(() => {
             immune = false;
@@ -946,8 +972,8 @@ function hitByBoss(player, boss){
 }
 
 function hitZombie(bullet, zombie) {
-    bullet.destroy(); // Eliminar la bala
-    zombie.destroy(); // Eliminar el zombie
+    bullet.destroy(); 
+    zombie.destroy();
 
     // Incrementar el puntaje
     score += 50;
@@ -957,16 +983,25 @@ function hitZombie(bullet, zombie) {
 function hitBoss(bullet, boss) {
 
     if (bossHealth > 0) {
-        bossHealth -= 1; // Reduce la salud del jefe
-        bossText.setText(`Vida: ${bossHealth}`); // Actualiza el texto de vida del jefe
+        bossHealth -= bossDamage;
+        bossText.setText(`Vida: ${bossHealth}`);
 
         if (bossHealth <= 0) {
             boss.setVisible(false);
-            boss.destroy(); // Elimina al jefe si su salud llega a 0
-            score += 1000; // Incrementa el puntaje
+            boss.destroy(); 
+            score += 1000; 
             scoreText.setText('Score: ' + score);
-            this.scene.start("sceneWinner");
 
+            let user = JSON.parse(localStorage.getItem(`superviviente ${survivor}`));
+
+            if (user.puntuacion < score) {
+                localStorage.setItem(`superviviente ${survivor}`, JSON.stringify({
+                    jugador: survivor,
+                    puntuacion: score,
+                    fecha: getActualDate()
+                }));
+            }
+            this.scene.start("sceneWinner");
         }
     }
 }
@@ -1005,9 +1040,11 @@ function resetLevel() {
     scoreText.setText('Score: ' + score);
     livesText.setText('Lives: ');
 
-    gasolines.children.iterate(function (child) {
-        child.enableBody(true, child.x, 0, true, true);
-    });
+    try{
+        gasolines.children.iterate(function (child) {
+            child.enableBody(true, child.x, 0, true, true);
+        });
+    }catch(e){}
 
     zombies.clear(true, true);
     for (let i = 0; i < contZombi; i++) { // Cambia el número de zombies según sea necesario
@@ -1352,8 +1389,6 @@ const seleccion = {
             }
         });
     }
-
-
 };
 
 const sceneGameOver = {
@@ -1362,20 +1397,23 @@ const sceneGameOver = {
     preload() {
         this.load.image("background", "public/assets/fondo-game-over.jpg");
         this.load.image("logo", "public/assets/titulo.webp");
-        this.load.audio('gameover_music', 'public/assets/audio/Game Over Laugh.mp3');
     },
     
     create() {
         // Obtener el ancho y alto de la pantalla
         const { width, height } = this.cameras.main;
 
-        this.gameOverMusic = this.sound.add('gameover_music', { 
-            loop: true, // Para que se repita en bucle
-            volume: 0.5 // Ajusta el volumen (0.0 - 1.0)
-        });
-    
-        this.gameOverMusic.play(); // Inicia la música
+        const audio = document.getElementById('bgMusic');
 
+        const newSource = document.createElement('source');
+        newSource.src = 'public/assets/audio/Game Over Laugh.mp3';
+        newSource.type = 'audio/wav';
+        audio.innerHTML = '';
+
+        audio.appendChild(newSource);
+        audio.load();
+        audio.play();
+        document.getElementById('playPauseBtn').textContent = "⏸️ Pausar";
 
         this.add.image(600, 300, "background").setScale(2);
         this.add.image(900, 100, "logo").setScale(1);
@@ -1411,19 +1449,26 @@ const sceneWinner = {
     preload() {
         this.load.image("background", "public/assets/fondo-victoria.jpg");
         this.load.image("logo", "public/assets/titulo.webp");
-        this.load.audio('winner_music', 'public/assets/audio/monsters within.mp3');
     },
     
     create() {
         // Obtener el ancho y alto de la pantalla
         const { width, height } = this.cameras.main;
 
-        this.gameOverMusic = this.sound.add('winner_music', { 
-            loop: true, // Para que se repita en bucle
-            volume: 0.5 // Ajusta el volumen (0.0 - 1.0)
-        });
-    
-        this.gameOverMusic.play(); // Inicia la música
+        const audio = document.getElementById('bgMusic');
+
+        const newSource = document.createElement('source');
+        newSource.src = 'public/assets/audio/monsters within.mp3';
+        newSource.type = 'audio/wav';
+        audio.innerHTML = '';
+
+        audio.appendChild(newSource);
+        audio.load();
+        audio.play();
+        document.getElementById('playPauseBtn').textContent = "⏸️ Pausar";
+
+        this.add.image(600, 300, "background").setScale(2);
+        this.add.image(900, 100, "logo").setScale(1);
 
 
         this.add.image(600, 300, "background").setScale(1);
@@ -1472,7 +1517,7 @@ let config = {
             debug: false
         }
     },
-    scene: [alias, seleccion, gameplay, gameplay2, sceneGameOver, win, sceneWinner]
+    scene: [alias, seleccion, gameplay, gameplay2, sceneGameOver, sceneWinner]
 };
 
 newFont.load().then((loadedFont) => {
