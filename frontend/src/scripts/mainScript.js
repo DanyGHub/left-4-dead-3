@@ -639,7 +639,7 @@ function create () {
     });
 
     //  The score
-    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#ff0000' });
+    scoreText = this.add.text(16, 16, 'score: ' + score, { fontSize: '32px', fill: '#ff0000' });
     livesText = this.add.text(16, 50, 'Lives: ', { fontSize: '32px', fill: '#ff0000' });
     healthText = this.add.text(16, 50, health + '%', { fontSize: '28px', fill: '#fff' });
     //The Health Bar
@@ -1031,7 +1031,7 @@ function hitBomb (player, bomb) {
 }
 
 function resetLevel() {
-    score = 0;
+    score = Math.floor(score / 2);
     health = 100;
     healthText.setText(health + '%');
     updateHealthBar();
