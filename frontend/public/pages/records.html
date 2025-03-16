@@ -53,7 +53,7 @@
                 </table>
             </div>
 
-            <button id="btn-regresar">REGRESAR</button>
+            <button id="btn-regresarRec">REGRESAR</button>
         </div>
 
     </main>
@@ -67,21 +67,16 @@
         crossorigin="anonymous"></script>
     <script src="src/scripts/records.js"></script>
     <script>
-        // window.onload = () => {
-        //     let audio = document.getElementById("bgMusic");
-        //     audio.play().catch(error => console.log("Reproducción bloqueada por el navegador", error));
-        // };
-
         document.addEventListener('DOMContentLoaded', (event) => {
             const elemento = document.getElementById('container-canvas');
-            elemento.addEventListener('mouseover', function () {
+            elemento.addEventListener('click', function () {
                 let audio = document.getElementById("bgMusic");
                 audio.play().catch(error => console.log("Reproducción bloqueada por el navegador", error));
             });
         });
 
         const sonidoClick = new Audio("public/assets/audio/startSFX.mp3");
-        document.getElementById("btn-regresar").addEventListener("click", () => {
+        document.getElementById("btn-regresarRec").addEventListener("click", () => {
 
             sonidoClick.play();
 

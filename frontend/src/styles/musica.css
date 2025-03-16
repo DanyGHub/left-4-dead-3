@@ -1,3 +1,19 @@
+:root {
+    --background-color: #2d3748; 
+    --button-background: #2d3748; 
+    --button-hover-background: #1a202c; 
+    --button-active-background: #ff3131; 
+    --button-text-color: white; 
+    --button-hover-text-color: #ff6b6b; 
+    --button-border-color: white; 
+    --swal-title-font: 'Future Rot', sans-serif; 
+    --swal-border-color: #ff3131; 
+    --swal-box-shadow: 0px 0px 15px rgba(255, 49, 49, 0.8); 
+    --button-padding: 12px 20px; 
+    --button-font-size: 16px; 
+    --button-border-radius: 5px; 
+}
+
 .audio-control {
     position: absolute;
     top: 5px;
@@ -5,12 +21,12 @@
 }
 
 .audio-control > button {
-    background-color: #2d3748;
-    color: white;
-    padding: 12px 20px;
-    font-size: 16px;
-    border: 2px solid white;
-    border-radius: 5px;
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+    padding: var(--button-padding);
+    font-size: var(--button-font-size);
+    border: 2px solid var(--button-border-color);
+    border-radius: var(--button-border-radius);
     cursor: pointer;
     text-transform: uppercase;
     font-weight: bold;
@@ -18,22 +34,22 @@
 }
 
 .audio-control > button:hover {
-    background-color: #1a202c;
+    background-color: var(--button-hover-background);
     transform: scale(1.05);
-    color: #ff6b6b;
+    color: var(--button-hover-text-color);
 }
 
 .audio-control > button:active {
-    background-color: #ff3131;
+    background-color: var(--button-active-background);
     color: black;
 }
 
 .swal-title {
-    font-family: 'Future Rot', sans-serif;
+    font-family: var(--swal-title-font);
     font-weight: bold;
 }
 
 .swal-popup {
-    border: 2px solid #ff3131;
-    box-shadow: 0px 0px 15px rgba(255, 49, 49, 0.8);
+    border: 2px solid var(--swal-border-color);
+    box-shadow: var(--swal-box-shadow);
 }

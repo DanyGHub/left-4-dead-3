@@ -1,13 +1,8 @@
 :root {
-    --black-green: #005500; /* Lugares oscuros */
-    --black: #000000; /* Fondos */
-    --metalic-gray: #808080; /* Estructuras Industriales */
-    --blood-red: #990000; /* Para cuando a alguien le de por Monstruar */
-    --non-white: #CCCCCC; /* Texto xd */
-
-    --black-blue: #071952;
-    --main-blue: #0B666A;
-    --light-blue: #35A29F;
+    --non-white: #CCCCCC; 
+    --background-color: #2d3748; 
+    --header-footer-bg: #2d3748; 
+    --header-text-color: var(--non-white);
 }
 
 @font-face {
@@ -27,10 +22,10 @@
 
 body {
     font-family: "Carrois Gothic SC", serif;
-    background-color: var(--main-blue);
+    background-color: var(--background-color);
 }
 
-main{
+main {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,7 +33,7 @@ main{
 
 header {
     text-align: center;
-    background-color: var(--metalic-gray);
+    background-color: var(--header-footer-bg);
     margin-bottom: 10px;
 }
 
@@ -46,12 +41,12 @@ header h1 {
     font-size: 2rem;
     font-weight: bold;
     padding: 5px;
-    color: var(--non-white);
+    color: var(--header-text-color);
 }
 
 footer {
     display: flex;
-    background-color: var(--metalic-gray);
+    background-color: var(--header-footer-bg);
     padding: 10px;
     align-items: center;
     justify-content: center;
@@ -59,6 +54,6 @@ footer {
 }
 
 footer h3 {
-    color: var(--non-white);
+    color: var(--header-text-color);
     font-size: 1rem;
 }

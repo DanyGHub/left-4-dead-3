@@ -7,30 +7,49 @@
     font-display: swap;
 }
 
-*{
-    margin: 0;
-    padding: 0;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+:root {
+    --background-color: #1a202c; 
+    --header-background: #2d3748; 
+    --button-background: #e53e3e; 
+    --button-hover-background: #c53030; 
+    --info-background: #2d3748; 
+    --text-color: white; 
+    --border-radius: 0.4rem; 
+    --main-font: 'Roboto', sans-serif; 
+    --secondary-font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+    --main-container-max-width: 60%; 
+    --grid-gap: 20px; 
+    --character-padding: 1rem; 
+    --character-font-size: 1.25rem; 
+    --title-font-size: 2.25rem; 
+    --subtitle-font-size: 1.875rem; 
+    --paragraph-font-size: 1.125rem; 
 }
 
-body{
-    font-family: 'Roboto', sans-serif;
-    background-color: #1a202c; 
-    color: white;
+* {
+    margin: 0;
+    padding: 0;
+    font-family: var(--secondary-font);
+}
+
+body {
+    font-family: var(--main-font);
+    background-color: var(--background-color); 
+    color: var(--text-color);
 }
 
 header {
-    background-color: #2d3748;
+    background-color: var(--header-background);
     padding: 1rem;
     margin-bottom: 1.5rem;
 }
 
 header h1 {
     font-size: 2rem; 
-    font-weight: 700px;
+    font-weight: 700; 
 }
 
-main{
+main {
     width: 95%;
     margin: auto;
     display: flex; 
@@ -40,10 +59,9 @@ main{
     gap: 1rem;
 }
 
-
 .maincontainer {
     display: flex;
-    max-width: 60%;
+    max-width: var(--main-container-max-width);
     flex-direction: column;
     text-align: center;
     justify-content: center;
@@ -52,26 +70,26 @@ main{
 }
 
 .maincontainer h2 {
-    font-size: 2.25rem; 
+    font-size: var(--title-font-size); 
     font-weight: 700; 
     margin-bottom: 1rem; 
 }
 
 .maincontainer p {
-    font-size: 1.125rem; 
+    font-size: var(--paragraph-font-size); 
     margin-bottom: 1.5rem; 
 }
 
-.maincontainer img{
+.maincontainer img {
     margin: 5px;
     border-radius: 50px;
 }
 
-button{
-    background-color: #e53e3e; 
-    color: white; 
+button {
+    background-color: var(--button-background); 
+    color: var(--text-color); 
     padding: 0.5rem 1rem; 
-    border-radius: 0.4rem; 
+    border-radius: var(--border-radius); 
     cursor: pointer;
     max-width: 25%;
     align-self: center;
@@ -80,18 +98,17 @@ button{
 }
 
 button:hover {
-    background-color: #c53030;
+    background-color: var(--button-hover-background);
 }
 
-.general{
+.general {
     gap: 10px;
     width: 90%;
     display: grid;
-    grid-gap: 20px;
+    grid-gap: var(--grid-gap);
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(1, auto);
-    grid-template-areas: "info        extra"
-
+    grid-template-areas: "info        extra";
 }
 
 .info {
@@ -99,19 +116,19 @@ button:hover {
 }
 
 .info h2, .extra h2 {
-    font-size: 1.875rem; 
+    font-size: var(--subtitle-font-size); 
     font-weight: 700; 
     margin-bottom: 1rem;
 }
 
 .info-text {
-    background-color: #2d3748; 
+    background-color: var(--info-background); 
     padding: 1rem;
-    border-radius: 0.4rem;
+    border-radius: var(--border-radius);
     width: max-content;
 }
 
-.extra{
+.extra {
     grid-area: extra;
 }
 
@@ -124,42 +141,42 @@ button:hover {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, auto);
     grid-template-areas: "char-tittle   char-tittle"
-                         "ch1           ch2"
+                         "ch1           ch2";
 }
 
 .characters h2 {
-    font-size: 1.875rem;
+    font-size: var(--subtitle-font-size);
     font-weight: 700; 
     margin-bottom: 1rem;
 }
 
-.char-tittle{
+.char-tittle {
     grid-area: char-tittle;
 }
 
-.ch1{
+.ch1 {
     grid-area: ch1;
 }
 
-.ch2{
+.ch2 {
     grid-area: ch2;
 }
 
 .character {
-    background-color: #2d3748; 
-    padding: 1rem;
-    border-radius: 0.4rem;
+    background-color: var(--info-background); 
+    padding: var(--character-padding);
+    border-radius: var(--border-radius);
     text-align: center;
 }
 
 .character p {
-    font-size: 1.25rem; 
+    font-size: var(--character-font-size); 
     font-weight: 700; 
     margin-bottom: 0.5rem; 
 }
 
-footer{
-    background-color: #2d3748; 
+footer {
+    background-color: var(--header-background); 
     padding: 1rem;
     text-align: center;
 }
