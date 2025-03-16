@@ -47,7 +47,7 @@
 
 body {
     font-family: "Carrois Gothic SC", serif;
-    background-color: #1a202c !important;
+    background-color: var(--backG) !important;
 }
 
 main {
@@ -58,7 +58,7 @@ main {
 
 header {
     text-align: center;
-    background-color: #2d3748;
+    background-color: var(--metalic-gray);
     margin-bottom: 10px;
 }
 
