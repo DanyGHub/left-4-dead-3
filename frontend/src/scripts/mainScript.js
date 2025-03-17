@@ -23,7 +23,7 @@ let scoreText;
 let damage = 5;
 let charImage;
 let desfribilador = [];
-let specialObj, botiquinText, armaText;
+let specialObj, botiquinText;
 let shooting = true;
 let bullets;
 let immune = false;
@@ -205,7 +205,7 @@ function create2 () {
     hit = this.sound.add('hit');
 
     // Crear el botiquín
-    specialObj = this.physics.add.sprite(
+     specialObj= this.physics.add.sprite(
         Phaser.Math.Between(500, 2000), // Genera un valor aleatorio entre 500 y 2000 para x
         Phaser.Math.Between(0, 400),    // Genera un valor aleatorio entre 0 y 300 para y
         'botiquin'
